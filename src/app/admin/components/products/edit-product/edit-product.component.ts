@@ -7,9 +7,9 @@ import { ProductService } from 'src/app/services/admin/models/product.service';
 import { AlertifyMessageType, AlertifyPosition, AlertifyService } from 'src/app/services/common/alertify.service';
 declare var $: any
 @Component({
-  selector: 'app-create-product',
-  templateUrl: './create-product.component.html',
-  styleUrls: ['./create-product.component.scss']
+  selector: 'app-edit-product',
+  templateUrl: './edit-product.component.html',
+  styleUrls: ['./edit-product.component.scss']
 })
 export class CreateProductComponent extends BaseComponent {
   urunID = 0;
@@ -42,6 +42,8 @@ export class CreateProductComponent extends BaseComponent {
         messageType: AlertifyMessageType.Success,
         dismissOthers: true
       })
+    }, errorMessage => {
+      this.alertify.message(errorMessage, { messageType: AlertifyMessageType.Error, dismissOthers: true, position: AlertifyPosition.TopRight })
     });
   }
 

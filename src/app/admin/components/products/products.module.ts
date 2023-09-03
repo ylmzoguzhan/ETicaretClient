@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductsComponent } from './products.component';
 import { RouterModule } from '@angular/router';
-import { CreateProductComponent } from './create-product/create-product.component';
+import { CreateProductComponent } from './edit-product/edit-product.component';
 import { ListProductComponent } from './list-product/list-product.component';
 
 
