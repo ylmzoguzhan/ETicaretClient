@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Product } from 'src/app/contracts/product';
 import { HttpClientService } from 'src/app/services/common/http-client.service';
 
 @Component({
