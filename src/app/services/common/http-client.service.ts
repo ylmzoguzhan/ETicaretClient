@@ -13,7 +13,7 @@ export class HttpClientService {
     if (requestParameter.fullEndPoint)
       url = requestParameter.fullEndPoint
     else
-      url = `${this.url(requestParameter)}${id ? `/${id}` : ""}`;
+      url = `${this.url(requestParameter)}${id ? `/${id}` : ""}${requestParameter.queryString ? `?${requestParameter.queryString}` : ""}`;
     return this.htppClient.get<T>(url, { headers: requestParameter.headers })
   }
   post<T>(requestParameter: Partial<RequestParemeters>, body: Partial<T>): Observable<T> {
@@ -21,7 +21,7 @@ export class HttpClientService {
     if (requestParameter.fullEndPoint)
       url = requestParameter.fullEndPoint
     else
-      url = `${this.url(requestParameter)}`
+      url = `${this.url(requestParameter)}${requestParameter.queryString ? `?${requestParameter.queryString}` : ""}`
     return this.htppClient.post<T>(url, body, { headers: requestParameter.headers });
   }
   put<T>(requestParameter: Partial<RequestParemeters>, body: Partial<T>): Observable<T> {
@@ -29,7 +29,7 @@ export class HttpClientService {
     if (requestParameter.fullEndPoint)
       url = requestParameter.fullEndPoint
     else
-      url = `${this.url(requestParameter)}`
+      url = `${this.url(requestParameter)} ${requestParameter.queryString ? `?${requestParameter.queryString}` : ""}`
     return this.htppClient.put<T>(url, body, { headers: requestParameter.headers })
   }
   delete<T>(requestParameter: Partial<RequestParemeters>, id: number): Observable<T> {
@@ -37,7 +37,7 @@ export class HttpClientService {
     if (requestParameter.fullEndPoint)
       url = requestParameter.fullEndPoint
     else
-      url = `${this.url(requestParameter)}/${id}`;
+      url = `${this.url(requestParameter)}/${id}${requestParameter.queryString ? `?${requestParameter.queryString}` : ""}`;
     return this.htppClient.delete<T>(url, { headers: requestParameter.headers });
   }
 
@@ -49,6 +49,7 @@ export class HttpClientService {
 export class RequestParemeters {
   controller?: string;
   action?: string;
+  queryString?: string;
   headers?: HttpHeaders;
   baseUrl?: string;
   fullEndPoint?: string;
