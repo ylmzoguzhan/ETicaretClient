@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -41,7 +41,21 @@ export class HttpClientService {
     console.log(url);
     return this.htppClient.delete<T>(url, { headers: requestParameter.headers });
   }
-
+  async generalDelete<T>(requestParameter: Partial<RequestParemeters>, id: number, successCallBack?: () => void, errorCallBack?: (errorMessage: string) => void) {
+    let url: string = "";
+    url = `${this.url(requestParameter)}/${id}${requestParameter.queryString ? `?${requestParameter.queryString}` : ""}`;
+    try {
+      const deleteObservable = this.htppClient.delete<T>(url, { headers: requestParameter.headers });
+      await firstValueFrom(deleteObservable);
+      if (successCallBack) {
+        successCallBack();
+      }
+    } catch (errorResponse) {
+      if (errorCallBack) {
+        errorCallBack(errorResponse.message);
+      }
+    }
+  }
   private url(requestParameter: Partial<RequestParemeters>): string {
     return `${requestParameter.baseUrl ? requestParameter.baseUrl : this.baseUrl}/${requestParameter.controller}${requestParameter.action ? `/requestParameter.action` : ""}`
   }

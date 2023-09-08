@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerName } from 'src/app/base/base.component';
@@ -11,7 +11,7 @@ import { HttpClientService } from 'src/app/services/common/http-client.service';
 })
 export class DeleteDirective {
 
-  constructor(private element: ElementRef, private renderer: Renderer2, private productService: ProductService, private alertifyService: AlertifyService, private router: Router) {
+  constructor(private element: ElementRef, private renderer: Renderer2, private httpClientService: HttpClientService, private alertifyService: AlertifyService, private router: Router) {
     const svgNS = 'http://www.w3.org/2000/svg'; // SVG namespace
 
     // SVG elementini oluştur
@@ -36,11 +36,18 @@ export class DeleteDirective {
     // SVG'yi bileşenin görünümüne ekleyin
     this.renderer.appendChild(this.element.nativeElement, svg);
   }
+  @Input() controllerName: string;
   @HostListener("click")
   async onClick() {
-    var id = this.element.nativeElement.getAttribute('id')
-    var returnURL = this.element.nativeElement.getAttribute('data-value')
+    const isConfirmed = window.confirm('Gerçekten silmek istiyor musunuz?');
+    if (isConfirmed) {
+      var id = this.element.nativeElement.getAttribute('id')
+      var returnURL = this.element.nativeElement.getAttribute('data-value')
+      await this.httpClientService.generalDelete({
+        controller: this.controllerName
+      }, id, () => { this.router.navigateByUrl(returnURL), errorMessage => this.alertifyService.message("Hata", { messageType: AlertifyMessageType.Error, position: AlertifyPosition.TopRight }) });
+    } else {
 
-    await this.productService.delete(id, () => { this.router.navigateByUrl(returnURL), errorMessage => this.alertifyService.message("Hata", { messageType: AlertifyMessageType.Error, position: AlertifyPosition.TopRight }) });
+    }
   }
 }

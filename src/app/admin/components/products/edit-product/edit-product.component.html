@@ -2,7 +2,12 @@
   <input [(ngModel)]="product.name" type="text" />
   <input [(ngModel)]="product.price" type="text" />
   <input [(ngModel)]="product.stock" type="text" />
-  <button appDelete id="{{ this.urunID }}" data-value="admin/products"></button>
+  <button
+    appDelete
+    id="{{ this.urunID }}"
+    data-value="admin/products"
+    controllerName="Products"
+  ></button>
 </div>
 
 <ng-template #elseBlock>
