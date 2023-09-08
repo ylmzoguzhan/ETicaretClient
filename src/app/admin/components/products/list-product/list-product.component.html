@@ -4,7 +4,7 @@
     <th>Stok</th>
     <th>Fiyat</th>
   </tr>
-  <tr *ngFor="let product of datas.products">
+  <tr routerLink="edit/{{ product.id }}" *ngFor="let product of datas.products">
     <td>{{ product.name }}</td>
   </tr>
 </table>

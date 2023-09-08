@@ -1,4 +1,16 @@
-<input type="text" #productName />
-<input type="text" #productPrice />
-<input type="text" #productStock />
-<button (click)="save(productName, productPrice, productStock)">Kaydet</button>
+<div *ngIf="urunID > 0; else elseBlock">
+  <input [(ngModel)]="product.name" type="text" />
+  <input [(ngModel)]="product.price" type="text" />
+  <input [(ngModel)]="product.stock" type="text" />
+  <button appDelete id="{{ this.urunID }}" data-value="admin/products"></button>
+</div>
+
+<ng-template #elseBlock>
+  <input [(ngModel)]="product.name" type="text" name="productName" />
+  <input [(ngModel)]="product.price" type="text" name="productPrice" />
+  <input [(ngModel)]="product.stock" type="text" name="productStock" />
+</ng-template>
+
+<button (click)="save(product.name, product.price, product.stock)">
+  Kaydet
+</button>

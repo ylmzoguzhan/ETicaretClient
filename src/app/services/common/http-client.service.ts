@@ -38,6 +38,7 @@ export class HttpClientService {
       url = requestParameter.fullEndPoint
     else
       url = `${this.url(requestParameter)}/${id}${requestParameter.queryString ? `?${requestParameter.queryString}` : ""}`;
+    console.log(url);
     return this.htppClient.delete<T>(url, { headers: requestParameter.headers });
   }
 

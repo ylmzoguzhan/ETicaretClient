@@ -8,6 +8,7 @@ import { UiModule } from './ui/ui.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
     NgxSpinnerModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     { provide: "baseUrl", useValue: "https://localhost:7108/api", multi: true }

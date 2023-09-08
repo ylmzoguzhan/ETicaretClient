@@ -8,3 +8,9 @@ export class List_Product_Item {
   price: number;
   stock: number;
 }
+export class Get_Product {
+  id: number;
+  name: string;
+  price: number;
+  stock: number;
+}
