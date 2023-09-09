@@ -3,7 +3,8 @@ import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 
 import { HttpClientService } from '../http-client.service';
 import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { AlertifyMessageType, AlertifyPosition, AlertifyService } from '../alertify.service';
-
+import { Router } from '@angular/router';
+declare var $: any;
 @Component({
   selector: 'app-file-upload',
   templateUrl: './file-upload.component.html',
@@ -11,33 +12,39 @@ import { AlertifyMessageType, AlertifyPosition, AlertifyService } from '../alert
 })
 export class FileUploadComponent {
 
-  constructor(private httpClientService: HttpClientService, private alertifyService: AlertifyService) { }
+  constructor(private httpClientService: HttpClientService, private alertifyService: AlertifyService, private router: Router) { }
   public files: NgxFileDropEntry[] = [];
+  fileData: FormData = new FormData();
+
   @Input() options: Partial<FileUploadOptions>
   public selectedFiles(files: NgxFileDropEntry[]) {
     this.files = files;
-    const fileData: FormData = new FormData();
     for (const file of files) {
       (file.fileEntry as FileSystemFileEntry).file((_file: File) => {
-        fileData.append(_file.name, _file, file.relativePath)
+        this.fileData.append(_file.name, _file, file.relativePath)
       });
     }
-    console.log(this.options)
-    this.httpClientService.post({
-      controller: this.options.controller,
-      action: this.options.action,
-      headers: new HttpHeaders({ "responseType": "blob" })
-    }, fileData).subscribe(data => {
-      this.alertifyService.message("Başarılı", {
-        messageType: AlertifyMessageType.Success,
-        position: AlertifyPosition.TopRight
+  }
+  save() {
+    const isConfirmed = window.confirm('Gerçekten silmek istiyor musunuz?');
+    if (isConfirmed) {
+      this.httpClientService.post({
+        controller: this.options.controller,
+        action: this.options.action,
+        headers: new HttpHeaders({ "responseType": "blob" })
+      }, this.fileData).subscribe(data => {
+        this.alertifyService.message("Başarılı", {
+          messageType: AlertifyMessageType.Success,
+          position: AlertifyPosition.TopRight
+        })
+      }, (errorResponse: HttpErrorResponse) => {
+        this.alertifyService.message("Hataaaa", {
+          messageType: AlertifyMessageType.Error,
+          position: AlertifyPosition.TopRight
+        })
       })
-    }, (errorResponse: HttpErrorResponse) => {
-      this.alertifyService.message("Hata", {
-        messageType: AlertifyMessageType.Error,
-        position: AlertifyPosition.TopRight
-      })
-    })
+    }
+    setTimeout(() => { location.reload(); }, 1500)
   }
 }
 
