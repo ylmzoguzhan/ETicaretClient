@@ -6,6 +6,7 @@ import { CreateProductComponent } from './edit-product/edit-product.component';
 import { ListProductComponent } from './list-product/list-product.component';
 import { FormsModule } from '@angular/forms';
 import { DeleteDirective } from 'src/app/directives/admin/delete.directive';
+import { FileUploadModule } from 'src/app/services/common/file-upload/file-upload.module';
 
 
 
@@ -19,6 +20,7 @@ import { DeleteDirective } from 'src/app/directives/admin/delete.directive';
   imports: [
     CommonModule,
     FormsModule,
+    FileUploadModule,
     RouterModule.forChild([
       { path: "", component: ProductsComponent },
       { path: "edit/:id", component: CreateProductComponent }

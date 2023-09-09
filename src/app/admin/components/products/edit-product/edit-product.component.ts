@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerName } from 'src/app/base/base.component';
@@ -6,6 +6,7 @@ import { Create_Product } from 'src/app/contracts/create_product';
 import { Get_Product } from 'src/app/contracts/list_product';
 import { ProductService } from 'src/app/services/admin/models/product.service';
 import { AlertifyMessageType, AlertifyPosition, AlertifyService } from 'src/app/services/common/alertify.service';
+import { FileUploadOptions } from 'src/app/services/common/file-upload/file-upload.component';
 declare var $: any
 @Component({
   selector: 'app-edit-product',
@@ -15,6 +16,12 @@ declare var $: any
 export class CreateProductComponent extends BaseComponent {
   urunID = 0;
   product: Get_Product = new Get_Product();
+  @Output() fileOptions: Partial<FileUploadOptions> = {
+    action: "upload",
+    controller: "products",
+    description: "Resimleri seçin",
+    accept: ".png, .jpg, .webp"
+  }
   constructor(private route: ActivatedRoute, private productService: ProductService, spinner: NgxSpinnerService, private alertify: AlertifyService) {
     super(spinner);
   }
