@@ -30,6 +30,7 @@ export class FileUploadComponent {
     if (isConfirmed) {
       this.httpClientService.post({
         controller: this.options.controller,
+        queryString: this.options.queryString,
         action: this.options.action,
         headers: new HttpHeaders({ "responseType": "blob" })
       }, this.fileData).subscribe(data => {

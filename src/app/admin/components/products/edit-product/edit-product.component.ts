@@ -26,11 +26,13 @@ export class CreateProductComponent extends BaseComponent {
     super(spinner);
   }
   async ngOnInit() {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe(async (params) => {
       this.urunID = +params.get('id');
+      this.fileOptions.queryString = `id=${this.urunID}`;
+      if (this.urunID > 0) {
+        this.product = await this.productService.get(this.urunID);
+      }
     });
-    if (this.urunID > 0)
-      this.product = await this.productService.get(this.urunID)
   }
   save(name: string, stock: number, price: number) {
     this.showSpinner(SpinnerName.BallScaleMultiple);
