@@ -1,0 +1,29 @@
+.images {
+  margin-top: 10px;
+  .containerBig {
+    max-width: 1440px;
+    padding: 0 100px;
+  }
+  &-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    &-item {
+      border: 1px solid black;
+      display: flex;
+      flex-direction: column;
+      &-image {
+        width: 150px;
+        height: 100px;
+        img {
+          height: 100%;
+          width: 100%;
+        }
+      }
+      button {
+        padding: 10px;
+        cursor: pointer;
+      }
+    }
+  }
+}

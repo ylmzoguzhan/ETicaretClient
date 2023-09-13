@@ -20,3 +20,16 @@
   Kaydet
 </button>
 <app-file-upload [options]="fileOptions"></app-file-upload>
+
+<div class="images">
+  <div class="containerBig">
+    <div class="images-content">
+      <div class="images-content-item" *ngFor="let image of images">
+        <div class="images-content-item-image">
+          <img src="{{ image.path }}" />
+        </div>
+        <button (click)="deleteImage(image.id)">delete</button>
+      </div>
+    </div>
+  </div>
+</div>
