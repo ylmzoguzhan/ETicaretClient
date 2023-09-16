@@ -1,0 +1,12 @@
+.registerForm {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  input {
+    width: 25%;
+  }
+  button {
+    width: 25%;
+  }
+}

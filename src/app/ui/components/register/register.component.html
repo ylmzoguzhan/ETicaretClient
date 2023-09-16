@@ -1,0 +1,44 @@
+<form [formGroup]="frm" (ngSubmit)="register(frm.value)" class="registerForm">
+  <input type="text" formControlName="FullName" placeholder="Ad Soyad" />
+  <div
+    *ngIf="
+      component.FullName.errors &&
+      (component.FullName.dirty || component.FullName.touched)
+    "
+  >
+    <div *ngIf="component.FullName.errors.required">Ad Soyad zorunludur.</div>
+    <div *ngIf="component.FullName.errors.maxLength">
+      Ad Soyad en fazla 50 karakter olmalıdır.
+    </div>
+    <div *ngIf="component.FullName.errors.minLength">
+      Ad Soyad en az 3 karakter olmalıdır.
+    </div>
+  </div>
+  <input type="text" formControlName="Email" placeholder="email" />
+  <div
+    *ngIf="
+      component.Email.errors &&
+      (component.Email.dirty || component.Email.touched)
+    "
+  >
+    <div *ngIf="component.Email.errors.required">Email zorunludur.</div>
+    <div *ngIf="component.Email.errors.email">
+      Geçerli bir email adresi girin.
+    </div>
+  </div>
+  <input type="password" formControlName="Password" placeholder="password" />
+  <input
+    type="password"
+    formControlName="PasswordAgain"
+    placeholder="passwordAgain"
+  />
+  <div
+    *ngIf="
+      frm.hasError('matchPassword') &&
+      (frm.get('Password').dirty || frm.get('PasswordAgain').dirty)
+    "
+  >
+    Şifreler uyuşmuyor.
+  </div>
+  <button type="submit">Kayıt Ol</button>
+</form>
