@@ -1,0 +1,10 @@
+<input type="text" formControlName="Email" placeholder="email" #txtEmail />
+<input
+  type="password"
+  formControlName="Password"
+  placeholder="password"
+  #txtPassword
+/>
+<button type="submit" (click)="login(txtEmail.value, txtPassword.value)">
+  Giriş yap
+</button>

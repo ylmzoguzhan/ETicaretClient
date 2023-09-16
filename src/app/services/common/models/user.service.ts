@@ -16,6 +16,20 @@ export class UserService {
       controller: "users"
     }, user)
     return await firstValueFrom(observable) as Create_User_Response;
+  }
+  async login(email: string, password: string, callback?: () => void) {
 
+    try {
+      const observable = this.httpClientService.post({
+        controller: "users",
+        action: "login"
+      }, { email, password })
+      await firstValueFrom(observable)
+      if (callback) {
+        callback();
+      }
+    } catch (error) {
+
+    }
   }
 }
