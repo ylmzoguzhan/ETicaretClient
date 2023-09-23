@@ -9,6 +9,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { JwtModule } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,13 @@ import { FormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     HttpClientModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => localStorage.getItem("accessToken"),
+        allowedDomains: ["localhost:7108"]
+      },
+    }),
   ],
   providers: [
     { provide: "baseUrl", useValue: "https://localhost:7108/api", multi: true }

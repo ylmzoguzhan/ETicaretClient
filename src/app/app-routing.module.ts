@@ -5,14 +5,15 @@ import { ProductsComponent } from './admin/components/products/products.componen
 import { HomeLayoutComponent } from './ui/home-layout/home-layout.component';
 import { DashboardComponent } from './admin/components/dashboard/dashboard.component';
 import { HomeComponent } from './ui/components/home/home.component';
+import { AuthGuard } from './guards/common/auth.guard';
 
 const routes: Routes = [
   {
     path: "admin", component: LayoutComponent, children: [
-      { path: "", component: DashboardComponent },
-      { path: "products", loadChildren: () => import("./admin/components/products/products.module").then(module => module.ProductsModule) }
+      { path: "", component: DashboardComponent, canActivate: [AuthGuard] },
+      { path: "products", loadChildren: () => import("./admin/components/products/products.module").then(module => module.ProductsModule), canActivate: [AuthGuard] }
 
-    ]
+    ], canActivate: [AuthGuard]
   },
   {
     path: "", component: HomeLayoutComponent, children: [
